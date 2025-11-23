@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Link - Digital Life Assistant for Seniors</title>
+    <style>
+        /* Global Styles from assets/css/styles.css */
+        :root {
+            --primary-color: #009688;
+            /* Teal - Trustworthy & Calm */
+            --primary-dark: #00796B;
+            --secondary-color: #FF9800;
+            /* Orange - Warmth & Energy */
+            --text-color: #333333;
+            --text-light: #666666;
+            --bg-color: #F9F9F9;
+            --white: #FFFFFF;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #E0F2F1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: var(--text-color);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Features/Pain Points */
+        .features {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        /* Why Us */
+        .why-us {
+            padding: 80px 0;
+            background-color: #E0F2F1;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .why-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        /* Process */
+        .process {
+            padding: 80px 0;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            margin: 0 auto 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #263238;
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #546E7A;
+            font-size: 0.9rem;
+            color: #B0BEC5;
+        }
+
+        /* FAQ Accordion */
+        .accordion-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            font-weight: bold;
+        }
+
+        .accordion-header:hover {
+            background-color: #f1f1f1;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+            background-color: #fafafa;
+        }
+
+        .accordion-content p {
+            padding: 20px 0;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+
+        .accordion-item.active .accordion-header {
+            color: var(--primary-color);
+        }
+
+        /* Pricing Specific Styles */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+            z-index: 1;
+        }
+
+        .pricing-card.featured::after {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        /* Offset for sticky header navigation */
+        section {
+            scroll-margin-top: 100px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                padding: 20px;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">Silver Link</a>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#about">About Us</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact" class="btn btn-primary" style="color: white; padding: 8px 16px;">Book Now</a>
+                </div>
+                <div class="mobile-menu-btn">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Solving Digital Challenges for Your Parents, At Their Doorstep</h1>
+            <p>Silver Link is a "Digital Life Assistant" service designed for seniors.<br>Real-name verified assistants
+                provide in-home/remote coaching, letting your care cross the distance.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Book In-Home Service</a>
+                <a href="#pricing" class="btn btn-secondary">Explore Peace of Mind Plans</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Do You Have These Worries?</h2>
+            <p class="section-subtitle">Who guards your parents' digital life when you are away?</p>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">😟</div>
+                    <h3>Helplessness</h3>
+                    <p>"Every time I teach mom over the phone, I can't see the screen, she doesn't understand the terms,
+                        and we both want to hang up in frustration."</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>Medical Access</h3>
+                    <p>"Parents can't use machines to register at the hospital, standing in long lines or making wasted
+                        trips."</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Fraud Risks</h3>
+                    <p>"Worried about parents clicking scam links or being added to investment groups, while I'm
+                        thousands of miles away."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-us">
+        <div class="container">
+            <h2 class="section-title">A Trustworthy "Digital Life Assistant"</h2>
+            <p class="section-subtitle">Silver Link provides dual support: In-Home + Remote, acting as a digital crutch
+                for your parents.</p>
+            <div class="why-grid">
+                <div class="why-item">
+                    <h3>🔒 Strict Screening</h3>
+                    <p>100% ID verification and background checks. No criminal record. Safety first.</p>
+                </div>
+                <div class="why-item">
+                    <h3>❤️ Digital Empathy</h3>
+                    <p>We understand technology and seniors. Patient teaching, never rushing.</p>
+                </div>
+                <div class="why-item">
+                    <h3>📝 Transparent Feedback</h3>
+                    <p>Detailed reports after service, so you know exactly what your parents have learned.</p>
+                </div>
+                <div class="why-item">
+                    <h3>🤝 Community Trust</h3>
+                    <p>Partnered with multiple well-known communities and nursing institutions. Standardized service.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process">
+        <div class="container">
+            <h2 class="section-title">3 Steps to Arrange Service</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Online Booking</h3>
+                    <p>Place an order via website/WeChat and tell us what problem needs solving.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Assistance</h3>
+                    <p>Assistant arrives on time or connects remotely to patiently teach and fix issues.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Receive Feedback</h3>
+                    <p>Service ends, you receive a summary report confirming the issue is resolved.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" style="background-color: #f0f8ff;">
+        <div class="container">
+            <h2 class="section-title">Real User Stories</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Distance is No Barrier</h3>
+                    <p><strong>Ms. Zhang:</strong> "Mom has trouble walking. Assistant Wang helped her bind her
+                        insurance card and taught her to book appointments from home. It's so much more convenient now!"
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Protecting Savings</h3>
+                    <p><strong>Mr. Li:</strong> "Dad kept watching investment ads. The assistant explained fraud risks
+                        from a third-party perspective and cleaned up spam apps. Much more effective than me nagging!"
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Independence</h3>
+                    <p><strong>Grandma Wang:</strong> "I used to bother my neighbor for electricity bills. Now Teacher
+                        Li taught me how to pay on my phone. I feel so accomplished doing it myself."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="features">
+        <div class="container">
+            <h2 class="section-title">Full-Scenario Digital Support</h2>
+            <p class="section-subtitle">From basic phone settings to complex hospital appointments, we solve it all with
+                patience.</p>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>Medical Health</h3>
+                    <ul style="list-style: disc; padding-left: 20px; margin-top: 15px;">
+                        <li>Online Hospital Registration</li>
+                        <li>Video Consultation Coaching</li>
+                        <li>Digital Insurance Card Activation</li>
+                        <li>Online Pharmacy & Payment</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Life & Utilities</h3>
+                    <ul style="list-style: disc; padding-left: 20px; margin-top: 15px;">
+                        <li>Utility Bill Payments (Water/Gas/Electric)</li>
+                        <li>Phone & Broadband Top-ups</li>
+                        <li>Social Security Certification Help</li>
+                        <li>Property Management Fee Payment</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>Security & Cleanup</h3>
+                    <ul style="list-style: disc; padding-left: 20px; margin-top: 15px;">
+                        <li>Phone Junk Cleaning & Speedup</li>
+                        <li>Removing Spam/Malicious Apps</li>
+                        <li>Anti-Fraud App Setup</li>
+                        <li>Payment Limits & Security Locks</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❤️</div>
+                    <h3>Family Connection</h3>
+                    <ul style="list-style: disc; padding-left: 20px; margin-top: 15px;">
+                        <li>WeChat Video/Voice Call Teaching</li>
+                        <li>Family Group Chat & Photo Sharing</li>
+                        <li>Senior Mode Setup (TikTok/Kuaishou)</li>
+                        <li>Music/Opera App Installation</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛒</div>
+                    <h3>Digital Convenience</h3>
+                    <ul style="list-style: disc; padding-left: 20px; margin-top: 15px;">
+                        <li>Ride Hailing Apps (One-click Call)</li>
+                        <li>Food/Grocery Delivery Ordering</li>
+                        <li>Basic Online Shopping</li>
+                        <li>Map Navigation & Bus Queries</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>Custom Needs</h3>
+                    <p style="margin-top: 15px;">One-on-one consultation for special needs (e.g., Smart Home connection,
+                        Old Photo Restoration).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="features" style="background-color: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title">Pricing & Packages</h2>
+            <p class="section-subtitle">Choose a "Peace of Mind" plan and give your parents a long-term digital
+                assistant.</p>
+            <div class="pricing-grid">
+                <!-- Single Service -->
+                <div class="pricing-card">
+                    <h3>Single Service</h3>
+                    <p class="text-light">For urgent issues</p>
+                    <div class="price">¥XXX <span>/start</span></div>
+                    <ul class="features-list">
+                        <li>1 In-Home Service (within 2h)</li>
+                        <li>OR 1 Deep Remote Assistance</li>
+                        <li>Issue Resolution + Basic Teaching</li>
+                        <li>Single Service Report</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary">Book Single</a>
+                </div>
+
+                <!-- Monthly Package -->
+                <div class="pricing-card featured">
+                    <h3>Monthly "Peace of Mind"</h3>
+                    <p class="text-light">A "Digital Nanny" for parents</p>
+                    <div class="price">¥XXX <span>/mo</span></div>
+                    <ul class="features-list">
+                        <li><strong>2 In-Home Visits</strong> per month</li>
+                        <li><strong>Unlimited</strong> Remote Assistance</li>
+                        <li>Priority Response (within 2h)</li>
+                        <li>Monthly Digital Life Report</li>
+                        <li>Regular Anti-Fraud Check</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">View Details</a>
+                </div>
+
+                <!-- Quarterly Package -->
+                <div class="pricing-card">
+                    <h3>Quarterly "Companion"</h3>
+                    <p class="text-light">Systematic Skill Improvement</p>
+                    <div class="price">¥XXX <span>/qtr</span></div>
+                    <ul class="features-list">
+                        <li>Includes all Monthly benefits</li>
+                        <li><strong>15% Off Discount</strong></li>
+                        <li>Custom Digital Courses (e.g., Photography)</li>
+                        <li>Holiday Care Visits</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-secondary">Upgrade Inquiry</a>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; color: #666; font-size: 0.9rem;">* Detailed pricing subject
+                to actual booking page and city standards.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="features">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                <h2 class="section-title">About Us</h2>
+                <p style="margin-bottom: 20px;">In this connected era, we enjoy the convenience of technology, but often
+                    overlook our parents struggling behind us. Unable to book doctor appointments, missing video calls
+                    with grandchildren, or losing savings to scams...</p>
+                <p style="margin-bottom: 20px;">Silver Link was born from guilt and responsibility. We hope to be the
+                    "Silver Link" connecting children and parents. We are dedicated to bridging this digital divide
+                    through professional, patient service, allowing every senior to enjoy digital life with dignity, and
+                    every child to work away from home with peace of mind.</p>
+                <p style="font-weight: bold; color: var(--primary-color);">Our Values: Respect, Warmth, New Filial
+                    Piety.</p>
+            </div>
+
+            <div class="why-grid" style="margin-top: 40px;">
+                <div class="card">
+                    <h3>Strict Screening</h3>
+                    <p>All in-home assistants must pass ID verification, background checks (no criminal record), and
+                        hold health certificates.</p>
+                </div>
+                <div class="card">
+                    <h3>Privacy Promise</h3>
+                    <p>Strict NDAs signed. No viewing of unrelated private info. Funds operations must be authorized by
+                        children or seniors.</p>
+                </div>
+                <div class="card">
+                    <h3>Empathy Training</h3>
+                    <p>All assistants pass "Senior Simulation" courses before starting, truly understanding senior
+                        difficulties and practicing "Infinite Patience".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="features" style="background-color: #f0f8ff;">
+        <div class="container">
+            <h2 class="section-title">FAQ</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+
+                <h3 style="margin-top: 20px; margin-bottom: 10px; color: var(--primary-dark);">🛡️ Security & Privacy
+                </h3>
+                <div class="accordion-item">
+                    <div class="accordion-header">Is in-home service safe? How do you screen staff?</div>
+                    <div class="accordion-content">
+                        <p>Every Silver Link assistant undergoes strict background checks: ID verification, no criminal
+                            record, and health certificate. Services are recorded (with consent) to ensure transparency.
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Will my parents' privacy be leaked?</div>
+                    <div class="accordion-content">
+                        <p>Absolutely not. We sign strict NDAs and only view the minimum information needed to solve the
+                            problem. For example, when teaching how to send photos, we do not browse other albums.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px; margin-bottom: 10px; color: var(--primary-dark);">💰 Pricing & Refunds</h3>
+                <div class="accordion-item">
+                    <div class="accordion-header">Is there a fee if the senior refuses service on-site?</div>
+                    <div class="accordion-content">
+                        <p>If service cannot proceed due to strong resistance, we do not charge the service fee, only a
+                            small travel stipend (approx. ¥30-50).</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">Can I cancel or reschedule?</div>
+                    <div class="accordion-content">
+                        <p>Free cancellation/rescheduling 4+ hours before service. Within 4 hours, a small fee may
+                            apply.</p>
+                    </div>
+                </div>
+
+                <div
+                    style="background-color: #FFF3E0; border: 1px solid #FFE0B2; padding: 20px; border-radius: 8px; margin-top: 40px;">
+                    <h3 style="color: #E65100; margin-bottom: 10px;">⚠️ Risk Warning</h3>
+                    <p style="font-size: 0.9rem;">Silver Link strives to reduce digital risks for seniors, but we are
+                        not law enforcement. We cannot directly recover lost funds. In case of serious fraud, please
+                        call the police or contact your bank immediately.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="features">
+        <div class="container">
+            <h2 class="section-title">Book a Service</h2>
+            <p class="section-subtitle">Fill out the form below, and our support team will contact you within 24 hours.
+            </p>
+            <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Booking submitted! We will contact you soon.');">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="How should we address you?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Your mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Parents' City</label>
+                        <select id="city">
+                            <option value="">Select City</option>
+                            <option value="shanghai">Shanghai</option>
+                            <option value="beijing">Beijing</option>
+                            <option value="hangzhou">Hangzhou</option>
+                            <option value="shenzhen">Shenzhen</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Preference</label>
+                        <div class="checkbox-group">
+                            <label><input type="radio" name="type" value="home" checked> In-Home Service</label>
+                            <label><input type="radio" name="type" value="remote"> Remote Assistance</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="problem">Main Digital Issues (Multiple/Fill-in)</label>
+                        <textarea id="problem"
+                            placeholder="E.g., Difficulty booking doctor, Phone lag, Need WeChat video teaching..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; border: none;">Submit
+                        Booking</button>
+                </form>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <h3>Other Contact Methods</h3>
+                <p style="margin-top: 10px;">📞 Hotline: 400-123-4567</p>
+                <p>📧 Partnership: business@silverlink.com</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Silver Link</h4>
+                    <p>The bridge connecting children and parents in digital life.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <p>Phone: 400-123-4567</p>
+                    <p>Email: hello@silverlink.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Silver Link. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+            }
+
+            // Close mobile menu when a link is clicked
+            const navItems = document.querySelectorAll('.nav-links a');
+            navItems.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
+            // FAQ Accordion
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.parentElement;
+
+                    // Close other items
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
